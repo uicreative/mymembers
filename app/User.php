@@ -3,9 +3,15 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
+
+    use Billable;
+
+    protected $dates = ['trial_ends_at', 'subscription_ends_at'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +29,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function posts() {
+        return $this->hasMany('App\Post');
+    }
 }
